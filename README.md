@@ -19,6 +19,8 @@ Un-opinionated lightweight scaffolding of a basic terraform repo. Deliberately l
 <a name="usage"></a>
 ### Usage
 
+### First Clone the github repo
+
 <a name="bootstrap"></a>
 ##### Bootstrap
 
