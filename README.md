@@ -1,20 +1,20 @@
 # Terraform Scaffold (terraform-scaffold)
 
-Simple Terraform scaffold repo for the base of your projects.
+Simple Terraform scaffold for the base of your projects.
 
 - [Overview](#overview)
 - [Usage](#usage)
 - [Bootstrap](#bootstrap)
 - [Plan](#plan)
 - [Structure](#structure)
-- [To-do](#todo)
+- [Apply](#apply)
+- [Destroy](#destroy)
 
 <a name="overview"></a>
 ### Overview
 
 Un-opinionated lightweight scaffolding of a basic terraform repo. Deliberately lightweight (& for the time being un-finished).
 
-Yes there is a considerable amount more I could be doing with tf.sh & I may well add to that over the coming months. Most projects will not require additional complexity.
 
 <a name="usage"></a>
 ### Usage
@@ -24,6 +24,8 @@ Yes there is a considerable amount more I could be doing with tf.sh & I may well
 
 You can get setup using an s3 bucket as backend for terraform simply with the following. Be sure to check the variables.tf defaults and override them if you like.
 
+
+
 ```
 cd terraform/bootstrap
 terraform init
@@ -31,22 +33,24 @@ terraform plan -out tfplan.out
 terraform apply "tfplan.out"
 ```
 
+### NOTE
+
+The s3 bucket for state locking must be specified in the s3_bucket of the tfscaffold.sh file before running the plan command 
+
 <a name="plan"></a>
 ##### Plan
 
 dev plan >
 ```
 
-##### Author info
-David Heward
 cd bin/
-./tf.sh plan dev eu-west-1
+./tfscaffold.sh plan dev eu-west-1
 ```
 
 prod plan >
 ```
 cd bin/
-./tf.sh plan prod eu-west-1
+./tfscaffold.sh plan prod eu-west-1
 ```
 
 <a name="structure"></a>
@@ -55,17 +59,33 @@ cd bin/
 ```
 |____README.md
 |____bin
-| |____tf.sh (*performs orchestration of runs)
+| |____tfscaffold.sh (*performs orchestration of runs)
 |____.gitignore
 |____terraform
 | |____environments
 | | |____dev (*environment code - perhaps main.tf etc)
+| | | |____modules
+| | | | |____eks
+| | | | | |____eks-cluster.tf
+| | | | | |____eks-worker-nodes.tf
+| | | | | |____input.tf
+| | | | | |____output.tf
+| | | | | |____providers.tf
+| | | | | |____vpc.tf
 | | | |____backend.tf
 | | | |____README.md
 | | | |____outputs.tf
 | | | |____main.tf
 | | | |____variables.tf
 | | |____prod
+| | | |____modules
+| | | | |____eks
+| | | | | |____eks-cluster.tf
+| | | | | |____eks-worker-nodes.tf
+| | | | | |____input.tf
+| | | | | |____output.tf
+| | | | | |____providers.tf
+| | | | | |____vpc.tf
 | | | |____README.md
 | | | |____outputs.tf
 | | | |____main.tf
@@ -83,18 +103,34 @@ cd bin/
 | |____components (*shared components - default variables, backend config etc) etc
 | | |____backend.tf
 ```
+<a name="apply"></a>
+##### Apply
 
-<a name="todo"></a>
-### To do
+dev apply >
+```
 
-- Add better examples in environments
-- Show how components can be shared to the environment workspaces
-- Allow for variables to be passed to the final terraform cmd from the bin/tf.sh wrapper
-- Improve the bin/tf.sh wrapper
-    - nice args
-    - var passing to underlying cmd
-    - pre-flight checks
-    - input validation
+cd bin/
+./tfscaffold.sh apply dev us-east-1
+```
 
-### Author info
-David Heward
+prod apply >
+```
+cd bin/
+./tfscaffold.sh apply prod us-east-1
+```
+
+<a name="destroy"></a>
+##### Destroy
+
+dev destroy >
+```
+
+cd bin/
+./tfscaffold.sh 'apply -destroy' dev us-east-1
+```
+
+prod destroy >
+```
+cd bin/
+./tfscaffold.sh destroy prod us-east-1
+```
