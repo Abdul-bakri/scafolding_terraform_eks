@@ -118,7 +118,7 @@ resource "aws_autoscaling_group" "eks" {
   max_size             = "${var.max-size}"
   min_size             = "${var.min-size}"
   name                 = "${var.cluster-name}-eks-asg"
-  vpc_zone_identifier  = ["${aws_subnet.eks.1.id}"]
+  vpc_zone_identifier  = ["${aws_subnet.eks.*.id}"]
 
   tag   {
     key                 = "Name"
