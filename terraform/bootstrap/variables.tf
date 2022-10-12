@@ -1,26 +1,26 @@
 variable "region" {
-  type = "string"
+  type = string
   description = "region of deployment"
 }
 
 variable "bucket_name" {
-  type = "string"
+  type = string
   description = "name of your state file bucket"
-  default = "example-terraform-state-files"
+  default = "eks-state-files"
 }
 
 variable "environment" {
-  type = "string"
+  type = string
   description = "environment name"
   default = "dev"
 }
 
 variable "project" {
-  type = "string"
+  type = string
   description = "name of project"
 }
 
 variable "component" {
-  type = "string"
+  type = string
   description = "name of the component"
 }
