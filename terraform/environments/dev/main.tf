@@ -1,3 +1,9 @@
+
+provider "aws" {
+access_key = var.aws_access_key
+secret_key = var.aws_secret_key
+token = var.aws_session_token
+}
 provider "aws" {
   region = local.region
 }
@@ -26,7 +32,7 @@ locals {
   name = basename(path.cwd)
   # var.cluster_name is for Terratest
   cluster_name = coalesce(var.cluster_name, local.name)
-  region       = "us-west-2"
+  region = var.aws_region
 
   vpc_cidr = "10.0.0.0/16"
   azs      = slice(data.aws_availability_zones.available.names, 0, 3)
