@@ -46,13 +46,13 @@ dev plan >
 ```
 
 cd bin/
-./tfscaffold.sh plan dev eu-west-1
+./tfscaffold.sh plan dev us-east-1
 ```
 
 prod plan >
 ```
 cd bin/
-./tfscaffold.sh plan prod eu-west-1
+./tfscaffold.sh plan prod us-east-1
 ```
 
 <a name="structure"></a>
