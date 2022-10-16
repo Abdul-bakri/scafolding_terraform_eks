@@ -85,7 +85,8 @@ module "eks_blueprints" {
       	sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
       	sudo yum install jenkins
       	sudo service jenkins start
-      	EOT # Optional config
+      EOT 
+        # Optional config
 
       # --node-labels is used to apply Kubernetes Labels to Nodes
       # --register-with-taints used to apply taints to Nodes
