@@ -39,7 +39,7 @@ locals {
 # EKS Blueprints
 #---------------------------------------------------------------
 module "eks_blueprints" {
-  source = "../../.."
+  source = "github.com/aws-ia/terraform-aws-eks-blueprints"
 
   cluster_name    = local.name
   cluster_version = "1.23"
@@ -86,7 +86,7 @@ module "eks_blueprints" {
       	sudo yum install jenkins
       	sudo service jenkins start
       EOT 
-        # Optional config
+      	# Optional config
 
       # --node-labels is used to apply Kubernetes Labels to Nodes
       # --register-with-taints used to apply taints to Nodes
@@ -163,7 +163,7 @@ module "eks_blueprints" {
 }
 
 module "eks_blueprints_kubernetes_addons" {
-  source                   = "../../../modules/kubernetes-addons"
+  source                   = "github.com/aws-ia/terraform-aws-eks-blueprints/modules/kubernetes-addons"
   eks_cluster_id           = module.eks_blueprints.eks_cluster_id
   eks_cluster_endpoint     = module.eks_blueprints.eks_cluster_endpoint
   eks_oidc_provider        = module.eks_blueprints.oidc_provider
@@ -196,11 +196,10 @@ module "eks_blueprints_kubernetes_addons" {
                   10:
                     - .*
                 EOT
-      }
+      },
     ]
   }
 }
-
 #---------------------------------------------------------------
 # Custom IAM role for Self Managed Node Group
 #---------------------------------------------------------------
