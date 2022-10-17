@@ -78,16 +78,14 @@ module "eks_blueprints" {
       EOT
 
       post_userdata = <<-EOT
-      	sudo yum update 
+      	sudo yum update -y
         sudo yum install wget
-        sudo amazon-linux-extras install java-openjdk17
+        sudo amazon-linux-extras install java-openjdk11
         sudo amazon-linux-extras install epel -y
         sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
         sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
-        sudo yum update
-        sudo yum install -y jenkins 
-        sudo systemctl stop jenkins 
-        sudo systemctl start jenkins
+        sudo yum install jenkins -y
+        sudo service jenkins start
       EOT 
       	# Optional config
 
