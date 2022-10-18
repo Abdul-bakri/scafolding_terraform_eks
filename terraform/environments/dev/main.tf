@@ -234,6 +234,42 @@ resource "aws_iam_role" "self_managed_ng" {
   tags = local.tags
 }
 
+resource "aws_iam_role_policy" "min-iam-policy" {
+  name   = "min-iam-policy"
+  role   = aws_iam_role.self_managed_ng.id
+  policy = data.aws_iam_policy_document.policy_central_logging_acadian_lambda.json
+}
+
+data "aws_iam_policy_document" "min-iam-policy" {
+  statement {
+    actions = [
+      "ec2:*",
+        "elasticloadbalancing:*",
+        "cloudtrail:*",
+        "events:*",
+        "logs:*",
+        "cloudwatch:*",
+        "autoscaling:*",
+        "iam:*",
+        "eks:*",
+        "rds:*",
+        "ecr:*",
+        "s3:*",
+        "ssm:*",
+        "secretsmanager:*",
+        "acm:*",
+        "kms:*",
+        "cloudfront:*",
+        "sts:*"
+    ]
+    effect = "Allow"
+
+    resources = [
+      "*",
+    ]
+  }
+}
+
 resource "aws_iam_instance_profile" "self_managed_ng" {
   name = "self-managed-node-instance-profile"
   role = aws_iam_role.self_managed_ng.name
